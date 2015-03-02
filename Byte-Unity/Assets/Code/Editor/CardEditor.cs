@@ -24,13 +24,6 @@ public class CardEditor : EditorWindow {
 	protected int typeIndex;
 	protected string expressionName;
 
-	protected void Load() {
-	}
-
-	protected void Save() {
-	}
-
-	// TODO: replace with a runtime enumeration
 	protected static IEnumerable<System.Type> EnumerateExpressionTypes() {
 		foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
 			foreach (Type t in assembly.GetTypes()) {

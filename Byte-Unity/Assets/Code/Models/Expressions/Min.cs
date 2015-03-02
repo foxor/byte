@@ -8,4 +8,9 @@ public class Min : Expression {
 	{
 		return Mathf.Min(arguments.Select<Expression, int>(x => x.Evaluate(context)).ToArray());
 	}
+
+	public override bool UsesY ()
+	{
+		return arguments.Any(x => x.UsesY());
+	}
 }

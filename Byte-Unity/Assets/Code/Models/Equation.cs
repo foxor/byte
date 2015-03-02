@@ -5,4 +5,16 @@ using System.Collections.Generic;
 public class Equation {
 	public Symbols leftHandSide;
 	public Expression rightHandSide;
+
+	public void Execute(EvaluationContext context) {
+		int value = rightHandSide.Evaluate(context);;
+		switch (leftHandSide) {
+		case Symbols.x:
+			context.X = value;
+			break;
+		case Symbols.y:
+			context.Y = value;
+			break;
+		}
+	}
 }

@@ -2,12 +2,20 @@
 using System.Collections;
 
 public class RollBits : Expression {
-	public override int Evaluate (EvaluationContext context)
-	{
+	public override int Evaluate (EvaluationContext context) {
+		return Roll();
+	}
+
+	public static int Roll() {
 		return RollBit() + RollBit() + RollBit() + RollBit() + RollBit() + RollBit() + RollBit() + RollBit();
 	}
 
 	protected static int RollBit() {
 		return Random.Range(0f, 1f) > 0.5f ? 1 : 0;
+	}
+
+	public override bool UsesY ()
+	{
+		return false;
 	}
 }

@@ -11,4 +11,9 @@ public abstract class InfixExpression : Expression {
 	{
 		return Operator(lhs.Evaluate(ctx), rhs.Evaluate(ctx));
 	}
+
+	public sealed override bool UsesY ()
+	{
+		return lhs.UsesY() || rhs.UsesY();
+	}
 }

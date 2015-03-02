@@ -7,4 +7,9 @@ public class Constant : Expression {
 	{
 		return value;
 	}
+
+	public override bool UsesY ()
+	{
+		return false;
+	}
 }
