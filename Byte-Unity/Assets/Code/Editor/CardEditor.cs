@@ -1,9 +1,11 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using System.Collections;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class CardEditor : EditorWindow {
-	protected static string[] Factions = {"Black", "Grey", "Yellow", "Green", "Blue", "White", "Red", "Purple", "Brown", "Shared"};
+	protected static Type[] ExpressionTypes = EnumerateExpressionTypes().ToArray();
 
 	[MenuItem("Byte/Create Card Set")]
 	public static void CreateSet() {
@@ -14,12 +16,12 @@ public class CardEditor : EditorWindow {
 		Selection.activeObject = so;
 	}
 
-	[MenuItem("Byte/Expression Editor")]
+	[MenuItem("Byte/Create Expression")]
 	public static void ShowWindow() {
 		EditorWindow.GetWindow<CardEditor>().Show();
 	}
 
-	protected int faction;
+	protected int typeIndex;
 	protected string expressionName;
 
 	protected void Load() {
@@ -28,12 +30,28 @@ public class CardEditor : EditorWindow {
 	protected void Save() {
 	}
 
+	// TODO: replace with a runtime enumeration
+	protected static IEnumerable<System.Type> EnumerateExpressionTypes() {
+		foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+			foreach (Type t in assembly.GetTypes()) {
+				if (typeof(Expression).IsAssignableFrom(t) && !t.IsAbstract) {
+					yield return t;
+				}
+			}
+		}
+	}
+
 	public void OnGUI() {
-		faction = EditorGUILayout.Popup(faction, Factions);
 		expressionName = EditorGUILayout.TextArea(expressionName);
+
+		GUILayout.BeginHorizontal();
+		GUILayout.Label("Type: ");
+		typeIndex = EditorGUILayout.Popup(typeIndex, ExpressionTypes.Select<Type, string>(x => x.ToString()).ToArray());
+		GUILayout.EndHorizontal();
+
 		if (GUILayout.Button("Create")) {
-			ScriptableObject so = ScriptableObject.CreateInstance<Expression>();
-			AssetDatabase.CreateAsset(so, "Assets/Resources/Data/Cards/" + Factions[faction] + "/" + expressionName + ".asset");
+			ScriptableObject so = ScriptableObject.CreateInstance(ExpressionTypes[typeIndex]);
+			AssetDatabase.CreateAsset(so, "Assets/Resources/Data/Expressions/" + expressionName + ".asset");
 			AssetDatabase.SaveAssets();
 			EditorUtility.FocusProjectWindow();
 			Selection.activeObject = so;

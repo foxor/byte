@@ -3,6 +3,6 @@ using System.Collections.Generic;
 
 [Serializable]
 public class Equation {
-	public Symbol leftHandSide;
+	public Symbols leftHandSide;
 	public Expression rightHandSide;
 }

@@ -3,13 +3,16 @@ using UnityEditor;
 using System.Collections;
 using System.Linq;
 
-[CustomEditor(typeof(Expression), true)]
+//[CustomEditor(typeof(Expression), true)]
 public class ExpressionEditor : Editor {
 	public override void OnInspectorGUI() {
 		GUILayout.Label(target.GetType().ToString());
-		target = new Add();
+		if (target.GetType().IsSubclassOf(typeof(InfixExpression))) {
+			DrawInfix((InfixExpression)target);
+		}
 	}
 
-	private void DrawExpression() {
+	private void DrawInfix(InfixExpression e) {
+		//e.lhs
 	}
 }
