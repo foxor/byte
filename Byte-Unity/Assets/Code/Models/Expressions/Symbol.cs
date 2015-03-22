@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Symbol : Expression {
 	public Symbols Target;
-	public override int Evaluate (EvaluationContext ctx)
+	public override byte Evaluate (EvaluationContext ctx)
 	{
 		switch (Target) {
 		case Symbols.x:

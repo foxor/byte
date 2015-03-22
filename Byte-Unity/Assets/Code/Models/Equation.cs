@@ -7,7 +7,7 @@ public class Equation {
 	public Expression rightHandSide;
 
 	public void Execute(EvaluationContext context) {
-		int value = rightHandSide.Evaluate(context);;
+		byte value = rightHandSide.Evaluate(context);;
 		switch (leftHandSide) {
 		case Symbols.x:
 			context.X = value;

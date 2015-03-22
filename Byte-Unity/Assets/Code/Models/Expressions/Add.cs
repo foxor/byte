@@ -3,8 +3,8 @@ using System.Collections;
 
 [System.Serializable]
 public class Add : InfixExpression {
-	protected override int Operator (int lhs, int rhs)
+	protected override byte Operator (byte lhs, byte rhs)
 	{
-		return lhs + rhs;
+		return (byte)(lhs + rhs);
 	}
 }

@@ -5,9 +5,9 @@ public abstract class InfixExpression : Expression {
 	public Expression lhs;
 	public Expression rhs;
 
-	protected abstract int Operator(int lhs, int rhs);
+	protected abstract byte Operator(byte lhs, byte rhs);
 
-	public sealed override int Evaluate (EvaluationContext ctx)
+	public sealed override byte Evaluate (EvaluationContext ctx)
 	{
 		return Operator(lhs.Evaluate(ctx), rhs.Evaluate(ctx));
 	}

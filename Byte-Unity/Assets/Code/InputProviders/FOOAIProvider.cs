@@ -2,24 +2,19 @@
 using System;
 using System.Collections;
 
-public class AIProvider : InputProvider {
+// First order optimal ai provider simply picks the best option at this instant in time.
+public class FOOAIProvider : InputProvider {
 	protected GameData data;
-	protected EvaluationContext context;
 	protected int playerId;
 	protected GameController controller;
 
-	public AIProvider(GameData data, EvaluationContext context, int playerId, GameController controller) {
+	public FOOAIProvider(GameData data, int playerId, GameController controller) {
 		this.data = data;
-		this.context = context;
 		this.playerId = playerId;
 		this.controller = controller;
 	}
 
-	public void Stream(Action<int> onComplete) {
-		onComplete(0);
-	}
-
-	public void Play(Action<int> onComplete) {
+	public void Stream(Action<byte> onComplete) {
 		onComplete(0);
 	}
 

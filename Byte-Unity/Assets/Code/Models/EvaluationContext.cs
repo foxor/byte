@@ -5,22 +5,22 @@ public class EvaluationContext {
 	public GameData data;
 
 	public int XTeam;
-	public int X {
+	public byte X {
 		get {
-			return data.players[XTeam].currency;
+			return data.players[XTeam];
 		}
 		set {
-			data.players[XTeam].currency = value;
+			data.players[XTeam] = value;
 		}
 	}
 
 	public int YTeam;
-	public int Y {
+	public byte Y {
 		get {
-			return data.players[YTeam].currency;
+			return data.players[YTeam];
 		}
 		set {
-			data.players[YTeam].currency = value;
+			data.players[YTeam] = value;
 		}
 	}
 

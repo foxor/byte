@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class Constant : Expression {
-	public int value;
-	public override int Evaluate (EvaluationContext ctx)
+	public byte value;
+	public override byte Evaluate (EvaluationContext ctx)
 	{
 		return value;
 	}

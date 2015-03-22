@@ -2,21 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class PlayerData {
-	public int currency = 15;
-	public List<Card> hand = new List<Card>();
-}
-
 public class GameData {
-	public PlayerData[] players;
+	public byte[] players;
 	public List<Card> buffer;
 	public Stack<Card>[] stacks;
+	public EvaluationContext context;
 
 	public GameData(CardSet[] sets, int playerCount) {
-		players = new PlayerData[playerCount];
-		for (int i = 0; i < playerCount; i++) {
-			players[i] = new PlayerData();
-		}
+		players = new byte[playerCount];
 
 		buffer = new List<Card>();
 
@@ -40,6 +33,8 @@ public class GameData {
 		while (ShouldStream()) {
 			BufferCard();
 		}
+
+		context = new EvaluationContext (this);
 	}
 
 	protected IEnumerable<Card> FlattenCardSet(CardSet cs) {
@@ -65,10 +60,13 @@ public class GameData {
 		return buffer.Count > 0;
 	}
 
-	public void PickCard(int cardIndex, int forPlayerId) {
-		Card c = buffer[cardIndex];
-		buffer.Remove(c);
-		players[forPlayerId].hand.Add(c);
-		players[forPlayerId].currency -= cardIndex;
+	public void PickCard(byte cardIndex, int forPlayerId) {
+		Card chosen = buffer[cardIndex];
+		buffer.Remove(chosen);
+		players[forPlayerId] = (byte)(players[forPlayerId] - cardIndex);
+
+		foreach (Equation e in chosen.equations) {
+			e.Execute(context);
+		}
 	}
 }
